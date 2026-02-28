@@ -22,7 +22,7 @@
         <header class="hero mock-hero">
             <div class="hero-bg"></div>
             <div class="hero-content">
-                <a href="index.html" class="back-link">← Back to Question Bank</a>
+                <a href="/" class="back-link">← Back to Dashboard</a>
                 <div class="badge">📝 Mock Test Series</div>
                 <h1>MP Exam <span class="gradient-text">Mock Test</span></h1>
                 <p class="subtitle">Practice like a real exam — Subject-wise & Full Length Tests</p>
@@ -31,7 +31,8 @@
 
         <!-- Tabs -->
         <div class="test-tabs-container">
-            <button class="test-tab active" id="tabSubject" onclick="switchTestTab('subject')">📚 Subject-wise Tests</button>
+            <button class="test-tab active" id="tabSubject" onclick="switchTestTab('subject')">📚 Subject-wise
+                Tests</button>
             <button class="test-tab" id="tabFull" onclick="switchTestTab('full')">🎯 Full Length Tests</button>
         </div>
 
@@ -65,7 +66,8 @@
 
         <!-- Full Length Section -->
         <section class="test-section" id="sectionFullLength" style="display:none;">
-            <div class="test-section-header" style="justify-content: space-between; align-items: center; display: flex;">
+            <div class="test-section-header"
+                style="justify-content: space-between; align-items: center; display: flex;">
                 <div style="display: flex; gap: 15px; align-items: center;">
                     <div class="test-section-icon">🎯</div>
                     <div>
@@ -74,7 +76,8 @@
                     </div>
                 </div>
                 <div>
-                    <select id="fullTestExamFilter" onchange="applyFullTestFilter()" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-weight: bold; cursor: pointer;">
+                    <select id="fullTestExamFilter" onchange="applyFullTestFilter()"
+                        style="padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-weight: bold; cursor: pointer;">
                         <option value="all">All Exams</option>
                         <option value="vyapam">MP Vyapam / PEB</option>
                         <option value="mppsc">MPPSC</option>
@@ -305,7 +308,7 @@
             <div class="result-actions">
                 <button class="btn-review" onclick="showReview()">📖 Review Answers</button>
                 <button class="btn-retry" onclick="location.reload()">🔄 Take New Test</button>
-                <a href="index.html" class="btn-back-home">🏠 Question Bank</a>
+                <a href="/" class="btn-back-home">🏠 Dashboard</a>
             </div>
         </div>
 

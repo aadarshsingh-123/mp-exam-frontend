@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/mp-exam-questions/(.*)",
+            "destination": "/mp-exam-questions/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
