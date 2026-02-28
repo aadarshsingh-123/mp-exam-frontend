@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Test - MP Exam GK/GS | MPPSC, SSC, Vyapam</title>
+    <meta name="description"
+        content="Take subject-wise or full length mock tests for MP exams with real exam center interface.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mock-test.css">
+</head>
+
+<body>
+
+    <!-- ============ SECTION 1: TEST SELECTION (Home) ============ -->
+    <div id="sectionHome" class="app">
+        <header class="hero mock-hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <a href="index.html" class="back-link">← Back to Question Bank</a>
+                <div class="badge">📝 Mock Test Series</div>
+                <h1>MP Exam <span class="gradient-text">Mock Test</span></h1>
+                <p class="subtitle">Practice like a real exam — Subject-wise & Full Length Tests</p>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <div class="test-tabs-container">
+            <button class="test-tab active" id="tabSubject" onclick="switchTestTab('subject')">📚 Subject-wise Tests</button>
+            <button class="test-tab" id="tabFull" onclick="switchTestTab('full')">🎯 Full Length Tests</button>
+        </div>
+
+        <!-- Subject Wise Section -->
+        <section class="test-section" id="sectionSubjectWise">
+            <div id="subjectCategoriesView">
+                <div class="test-section-header">
+                    <div class="test-section-icon">📚</div>
+                    <div>
+                        <h2>Choose a Subject</h2>
+                        <p>Subject-wise mock tests (50 Questions • 100 Marks • 1 Hour)</p>
+                    </div>
+                </div>
+                <div class="test-cards-grid" id="subjectCards">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            <div id="subjectTestsView" style="display:none;">
+                <div class="test-section-header" style="cursor:pointer;" onclick="backToSubjects()">
+                    <div class="test-section-icon">⬅️</div>
+                    <div>
+                        <h2 id="subjectTestTitle">Subject Tests</h2>
+                        <p>Click to go back to categories</p>
+                    </div>
+                </div>
+                <div class="test-cards-grid" id="subjectTestList">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Full Length Section -->
+        <section class="test-section" id="sectionFullLength" style="display:none;">
+            <div class="test-section-header" style="justify-content: space-between; align-items: center; display: flex;">
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <div class="test-section-icon">🎯</div>
+                    <div>
+                        <h2>Full Length Mock Tests</h2>
+                        <p>100 Questions • 200 Marks • 2 Hours • Mixed Subjects</p>
+                    </div>
+                </div>
+                <div>
+                    <select id="fullTestExamFilter" onchange="applyFullTestFilter()" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-weight: bold; cursor: pointer;">
+                        <option value="all">All Exams</option>
+                        <option value="vyapam">MP Vyapam / PEB</option>
+                        <option value="mppsc">MPPSC</option>
+                        <option value="police">MP Police</option>
+                        <option value="patwari">MP Patwari</option>
+                    </select>
+                </div>
+            </div>
+            <div class="test-cards-grid" id="fullLengthTestList">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <footer>
+            <p>MP Exam GK/GS Mock Test &copy; 2026 | For Educational Purposes Only</p>
+        </footer>
+    </div>
+
+    <!-- ============ SECTION 2: INSTRUCTIONS PAGE ============ -->
+    <div id="sectionInstructions" class="exam-instructions-page" style="display:none;">
+        <div class="instr-header">
+            <div class="instr-header-left">
+                <span class="instr-logo">📝 MP Exam Mock Test</span>
+            </div>
+            <div class="instr-header-right">
+                <div class="instr-user">
+                    <div class="user-avatar">👤</div>
+                    <span>Candidate</span>
+                </div>
+            </div>
+        </div>
+        <div class="instr-body">
+            <h2 class="instr-title" id="instrTitle">Mock Test</h2>
+            <div class="instr-meta">
+                <span><strong>Duration:</strong> <span id="instrDuration">60 Mins</span></span>
+                <span><strong>Maximum Marks:</strong> <span id="instrMarks">100</span></span>
+            </div>
+            <div class="instr-content">
+                <p><strong>Read the following instructions carefully.</strong></p>
+                <ol>
+                    <li>The Test contains <strong><span id="instrQCount">50</span> Questions</strong> having 4 options
+                        each, out of which only one is correct.</li>
+                    <li>You have to finish the test in <strong><span id="instrTime2">60</span> minutes</strong>.</li>
+                    <li>You will be awarded <strong>2 marks</strong> for each correct answer.</li>
+                    <li>There is <strong>1/3 negative marking</strong> (−0.67 marks) for each wrong answer.</li>
+                    <li>There is <strong>no penalty</strong> for questions that you have not attempted.</li>
+                    <li>Once you start the test, the timer will begin. Make sure you complete and submit before time
+                        runs out.</li>
+                </ol>
+
+                <h3>General Instructions:</h3>
+                <ol>
+                    <li>The countdown timer at the top will display the remaining time. When the timer reaches zero, the
+                        examination will end automatically.</li>
+                    <li>The <strong>Question Palette</strong> on the right side shows the status of each question:
+                        <div class="instr-legend">
+                            <div class="legend-row"><span class="leg-box leg-not-visited"></span> You have not visited
+                                the question yet.</div>
+                            <div class="legend-row"><span class="leg-box leg-not-answered"></span> You have not answered
+                                the question.</div>
+                            <div class="legend-row"><span class="leg-box leg-answered"></span> You have answered the
+                                question.</div>
+                            <div class="legend-row"><span class="leg-box leg-marked"></span> You have marked the
+                                question for review.</div>
+                            <div class="legend-row"><span class="leg-box leg-marked-answered"></span> You have answered
+                                and marked for review.</div>
+                        </div>
+                    </li>
+                </ol>
+
+                <h3>Navigating to a Question:</h3>
+                <ol>
+                    <li>Click on the question number in the <strong>Question Palette</strong> to go to that question
+                        directly.</li>
+                    <li>Click on <strong>Save & Next</strong> to save your answer and move to the next question.</li>
+                    <li>Click on <strong>Mark for Review & Next</strong> to save and mark the question for review, then
+                        go to the next question.</li>
+                    <li>Click on <strong>Clear Response</strong> to deselect your answer for the current question.</li>
+                </ol>
+            </div>
+
+            <div class="instr-declaration">
+                <label>
+                    <input type="checkbox" id="declareCheck">
+                    I have read all the instructions carefully and have understood them. I agree not to cheat or use
+                    unfair means in this examination.
+                </label>
+            </div>
+
+            <div class="instr-footer-btns">
+                <button class="btn-instr-prev" onclick="goHome()">← Go to Tests</button>
+                <button class="btn-instr-start" id="btnBegin" onclick="beginTest()" disabled>I am ready to
+                    begin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 3: EXAM INTERFACE ============ -->
+    <div id="sectionExam" class="exam-wrapper" style="display:none;">
+
+        <!-- Exam Header -->
+        <div class="exam-header">
+            <div class="exam-header-left">
+                <span class="exam-logo">📝 MP Exam Mock Test</span>
+                <span class="exam-test-name" id="examTestName">Mock Test</span>
+            </div>
+            <div class="exam-header-center">
+                <div class="exam-timer" id="examTimer">
+                    <span class="timer-label">Time Left</span>
+                    <span class="timer-box" id="timerH">01</span>
+                    <span class="timer-sep">:</span>
+                    <span class="timer-box" id="timerM">00</span>
+                    <span class="timer-sep">:</span>
+                    <span class="timer-box" id="timerS">00</span>
+                </div>
+            </div>
+            <div class="exam-header-right">
+                <button class="exam-hdr-btn" onclick="togglePalette()">Question Palette</button>
+            </div>
+        </div>
+
+        <!-- Exam Body -->
+        <div class="exam-body">
+
+            <!-- Left: Question Area -->
+            <div class="exam-main">
+                <!-- Section tabs -->
+                <div class="exam-section-bar">
+                    <span class="section-tab active" id="sectionTabLabel">SECTIONS</span>
+                    <span class="section-pill" id="sectionPill">Test</span>
+                </div>
+
+                <!-- Question Info -->
+                <div class="exam-q-info">
+                    <span class="exam-q-num" id="examQNum">Question No. 1</span>
+                    <div class="exam-q-meta">
+                        <span class="meta-marks-plus" id="metaMarks">Marks: <strong>+2</strong></span>
+                        <span class="meta-marks-neg">| <strong>−0.67</strong></span>
+                    </div>
+                </div>
+
+                <!-- Question Text -->
+                <div class="exam-q-text" id="examQText"></div>
+
+                <!-- Options -->
+                <div class="exam-q-options" id="examQOptions"></div>
+
+                <!-- Bottom Bar -->
+                <div class="exam-bottom-bar">
+                    <div class="exam-bottom-left">
+                        <button class="btn-mark-review" onclick="markForReviewNext()">Mark for Review & Next</button>
+                        <button class="btn-clear-resp" onclick="clearResponse()">Clear Response</button>
+                    </div>
+                    <div class="exam-bottom-right">
+                        <button class="btn-save-next" onclick="saveAndNext()">Save & Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Question Palette Sidebar -->
+            <div class="exam-sidebar" id="examSidebar">
+                <div class="sidebar-user">
+                    <div class="user-avatar-lg">👤</div>
+                    <span class="sidebar-username">Candidate</span>
+                </div>
+                <div class="sidebar-legend">
+                    <span class="sleg"><span class="sleg-box sleg-answered"></span> <span id="countAnswered">0</span>
+                        Answered</span>
+                    <span class="sleg"><span class="sleg-box sleg-marked"></span> <span id="countMarked">0</span>
+                        Marked</span>
+                    <span class="sleg"><span class="sleg-box sleg-not-visited"></span> <span
+                            id="countNotVisited">0</span> Not Visited</span>
+                    <span class="sleg"><span class="sleg-box sleg-not-answered"></span> <span
+                            id="countNotAnswered">0</span> Not Answered</span>
+                </div>
+                <div class="sidebar-section-label">SECTION : Test</div>
+                <div class="sidebar-palette" id="sidebarPalette">
+                    <!-- Numbered buttons generated by JS -->
+                </div>
+                <div class="sidebar-actions">
+                    <button class="btn-qpaper" onclick="toggleQuestionPaper()">Question Paper</button>
+                    <button class="btn-instrs" onclick="showExamInstructions()">Instructions</button>
+                </div>
+                <button class="btn-submit-exam" onclick="submitExam()">Submit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 4: RESULT ============ -->
+    <div id="sectionResult" class="app" style="display:none;">
+        <header class="hero mock-hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="badge">📊 Test Result</div>
+                <h1><span class="gradient-text" id="resultTitle">Mock Test Result</span></h1>
+            </div>
+        </header>
+
+        <div class="result-card">
+            <div class="result-stats-grid">
+                <div class="result-stat correct">
+                    <span class="result-stat-num" id="resCorrect">0</span>
+                    <span class="result-stat-label">Correct</span>
+                    <span class="result-stat-marks res-green" id="resCorrectM">+0</span>
+                </div>
+                <div class="result-stat wrong">
+                    <span class="result-stat-num" id="resWrong">0</span>
+                    <span class="result-stat-label">Wrong</span>
+                    <span class="result-stat-marks res-red" id="resWrongM">−0</span>
+                </div>
+                <div class="result-stat unanswered">
+                    <span class="result-stat-num" id="resSkipped">0</span>
+                    <span class="result-stat-label">Skipped</span>
+                    <span class="result-stat-marks">0</span>
+                </div>
+                <div class="result-stat total">
+                    <span class="result-stat-num" id="resTotal">0</span>
+                    <span class="result-stat-label">Total Score</span>
+                    <span class="result-stat-marks res-accent" id="resTotalM">0/200</span>
+                </div>
+            </div>
+            <div class="result-percentage">
+                <div class="percentage-bar">
+                    <div class="percentage-fill" id="resPctFill"></div>
+                </div>
+                <span id="resPctText">0%</span>
+            </div>
+            <div class="result-actions">
+                <button class="btn-review" onclick="showReview()">📖 Review Answers</button>
+                <button class="btn-retry" onclick="location.reload()">🔄 Take New Test</button>
+                <a href="index.html" class="btn-back-home">🏠 Question Bank</a>
+            </div>
+        </div>
+
+        <div id="reviewSection" style="display:none;">
+            <h2 class="section-title" style="margin-top:40px;">Answer Review</h2>
+            <div id="reviewContainer"></div>
+        </div>
+
+        <footer>
+            <p>MP Exam GK/GS Mock Test &copy; 2026 | For Educational Purposes Only</p>
+        </footer>
+    </div>
+
+    <!-- ============ QUESTION PAPER MODAL ============ -->
+    <div id="qpaperModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Question Paper</h3>
+                <button class="modal-close" onclick="toggleQuestionPaper()">✕</button>
+            </div>
+            <div class="modal-body" id="qpaperBody"></div>
+        </div>
+    </div>
+
+    <!-- ============ INSTRUCTIONS MODAL ============ -->
+    <div id="instrModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Instructions</h3>
+                <button class="modal-close"
+                    onclick="document.getElementById('instrModal').style.display='none'">✕</button>
+            </div>
+            <div class="modal-body">
+                <ol>
+                    <li>Click on the question number in Question Palette to jump to that question.</li>
+                    <li>Click <strong>Save & Next</strong> to save your answer and go to the next question.</li>
+                    <li>Click <strong>Mark for Review & Next</strong> to mark and move to the next question.</li>
+                    <li>Click <strong>Clear Response</strong> to deselect your answer.</li>
+                    <li><strong>+2 marks</strong> for correct and <strong>−0.67 marks</strong> for wrong answers.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Data -->
+    <script src="questions/batch12.js"></script>
+    <script src="questions/batch19.js"></script>
+    <script src="questions/batch20.js"></script>
+    <script src="questions/batch21.js"></script>
+    <script src="questions/batch23.js"></script>
+    <script src="questions/batch24.js"></script>
+    <script src="questions/batch25.js"></script>
+    <script src="questions/batch26.js"></script>
+    <script src="questions/computer_deep.js"></script>
+    <script src="questions/computer_extra.js"></script>
+    <script src="questions/computer_gk.js"></script>
+    <script src="questions/current_affairs.js"></script>
+    <script src="questions/expansion_batch.js"></script>
+    <script src="questions/final_expansion.js"></script>
+    <script src="questions/final_mega.js"></script>
+    <script src="questions/geo_eco_current.js"></script>
+    <script src="questions/geo_eco_extra.js"></script>
+    <script src="questions/history_polity.js"></script>
+    <script src="questions/history_polity_extra.js"></script>
+    <script src="questions/mega_batch.js"></script>
+    <script src="questions/mixed_gk.js"></script>
+    <script src="questions/mixed_gk_extra.js"></script>
+    <script src="questions/mp_gk.js"></script>
+    <script src="questions/mp_gk_extra.js"></script>
+    <script src="questions/science_tech.js"></script>
+    <script src="questions/science_tech_extra.js"></script>
+    <script src="questions/shortcut_batch.js"></script>
+    <script src="questions/ultimate_batch.js"></script>
+    <script src="questions/volume_batch.js"></script>
+    <script src="mock-test.js"></script>
+</body>
+
+</html>
