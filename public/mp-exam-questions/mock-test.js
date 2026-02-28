@@ -129,25 +129,25 @@ function markFullTestCompleted(filter, index) {
 function renderFullLengthTests() {
     const container = document.getElementById("fullLengthTestList");
     container.innerHTML = "";
-    
+
     // We want 100 full length tests.
     for (let i = 0; i < 100; i++) {
         const isUnlocked = getFullTestUnlockStatus(currentExamFilter, i);
         const isCompleted = localStorage.getItem(`mock_completed_full_${currentExamFilter}_${i}`) === 'true';
-        
+
         let displayLabel = "Full Length Mock Test";
         if (currentExamFilter !== 'all') {
-            const labelMap = {vyapam: 'MP Vyapam', mppsc: 'MPPSC', police: 'MP Police', patwari: 'MP Patwari'};
+            const labelMap = { vyapam: 'MP Vyapam', mppsc: 'MPPSC', police: 'MP Police', patwari: 'MP Patwari' };
             displayLabel = `${labelMap[currentExamFilter] || 'Exam'} Mock Test`;
         }
-        
+
         const card = document.createElement("div");
         card.className = "test-card test-card-full " + (isUnlocked ? "" : "test-card-locked");
         if (isUnlocked) {
             // pass 'all' as subject, but we will use currentExamFilter in beginTest
             card.onclick = () => showInstructions('all', `${displayLabel} ${i + 1}`, 100, i);
         }
-        
+
         card.innerHTML = `
             <div class="test-card-left">
                 <div class="test-card-icon-sm">${isUnlocked ? (isCompleted ? "✅" : "🎯") : "🔒"}</div>
@@ -281,7 +281,7 @@ function beginTest() {
         for (const info of Object.values(MOCK_CATEGORIES)) {
             if (info.data) pool = pool.concat(info.data);
         }
-        
+
         // Filter pool by currentExamFilter if not 'all'
         if (currentExamFilter && currentExamFilter !== 'all') {
             pool = pool.filter(q => q[6] && String(q[6]).toLowerCase().includes(currentExamFilter.toLowerCase()));
@@ -289,7 +289,7 @@ function beginTest() {
     } else {
         pool = MOCK_CATEGORIES[testSubject].data;
     }
-    
+
     // Ensure we have enough questions in the pool after filter, otherwise fallback safely
     if (pool.length === 0) {
         alert("Sorry, no questions found for this specific filter. Falling back to all questions.");
@@ -538,9 +538,11 @@ function submitExam() {
     // ===== Save result to backend =====
     try {
         const tokens = JSON.parse(localStorage.getItem('tokens') || '{}');
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const API_URL = isLocal ? 'http://localhost:8001/api/mocktest/submit/' : 'https://aadarshlodhi39.pythonanywhere.com/api/mocktest/submit/';
         if (tokens.access) {
             const timeTaken = testDuration - remainingTime;
-            fetch('http://localhost:8001/api/mocktest/submit/', {
+            fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
